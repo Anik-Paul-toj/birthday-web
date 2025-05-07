@@ -92,10 +92,20 @@ export default function Countdown({ targetDate, onCountdownEnd }) {
       <video
         autoPlay
         loop
-        
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
         src="/your-file.mp4"
+        onError={(e) => {
+          console.error("Video playback error:", e);
+        }}
+        ref={(el) => {
+          // Attempt to play the video when component mounts
+          if (el) {
+            el.play().catch(err => {
+              console.error("Failed to autoplay video:", err);
+            });
+          }
+        }}
       />
 
       {/* Overlay to ensure text readability */}
